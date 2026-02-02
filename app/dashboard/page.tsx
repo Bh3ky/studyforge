@@ -2,6 +2,7 @@ import { FileUpload } from "@/components/file-upload"
 import { RecentProjects } from "@/components/recent-projects"
 import { Sparkles } from "lucide-react"
 import Link from "next/link"
+import { UserButton } from "@clerk/nextjs"
 
 export default function DashboardPage() {
   return (
@@ -15,6 +16,9 @@ export default function DashboardPage() {
             </div>
             <span className="text-xl font-bold text-foreground tracking-tight">StudyForge</span>
           </Link>
+          <UserButton
+            appearance={{ elements: { avatarBox: "size-9 border border-border rounded-full" } }}
+          />
         </div>
       </header>
 

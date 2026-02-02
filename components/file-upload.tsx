@@ -16,10 +16,13 @@ interface UploadedFile {
   preview?: string
 }
 
+const MAX_FILE_SIZE_BYTES = 5 * 1024 * 1024
+
 export function FileUpload() {
   const [uploadedFiles, setUploadedFiles] = useState<UploadedFile[]>([])
   const [isDragging, setIsDragging] = useState(false)
   const [isProcessing, setIsProcessing] = useState(false)
+  const [uploadErrors, setUploadErrors] = useState<string[]>([])
   const router = useRouter()
 
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -36,17 +39,28 @@ export function FileUpload() {
     if (!files) return
 
     const newFiles: UploadedFile[] = []
+    const errors: string[] = []
 
     Array.from(files).forEach((file) => {
+      if (file.size > MAX_FILE_SIZE_BYTES) {
+        errors.push(`${file.name} exceeds the 5MB limit.`)
+        return
+      }
+
       if (file.type === "application/pdf") {
         newFiles.push({ file, type: "pdf" })
       } else if (file.type.startsWith("image/")) {
         const preview = URL.createObjectURL(file)
         newFiles.push({ file, type: "image", preview })
+      } else {
+        errors.push(`${file.name} is not a supported file type.`)
       }
     })
 
     setUploadedFiles((prev) => [...prev, ...newFiles])
+    if (errors.length > 0) {
+      setUploadErrors((prev) => [...prev, ...errors])
+    }
   }, [])
 
   const handleDrop = useCallback(
@@ -85,28 +99,32 @@ export function FileUpload() {
       uploadedFiles.map(async (uf) => {
         try {
           const endpoint = uf.type === "pdf" ? "/api/process-pdf" : "/api/process-image"
+          const formData = new FormData()
+          formData.append("file", uf.file)
 
           const response = await fetch(endpoint, {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              fileName: uf.file.name,
-              content: uf.type === "pdf" ? "PDF content extracted here" : undefined,
-              imageData: uf.type === "image" ? uf.preview : undefined,
-            }),
+            body: formData,
           })
 
           const result = await response.json()
+          if (!response.ok || !result.success) {
+            throw new Error(result.error || "Failed to process file")
+          }
           return {
             name: uf.file.name,
             type: uf.type,
+            size: uf.file.size,
             data: result.data,
+            recordId: result.recordId,
+            storageWarning: result.storageWarning,
           }
         } catch (error) {
           console.error("[v0] Processing error:", error)
           return {
             name: uf.file.name,
             type: uf.type,
+            size: uf.file.size,
             error: "Failed to process",
           }
         }
@@ -114,6 +132,13 @@ export function FileUpload() {
     )
 
     sessionStorage.setItem("processedFiles", JSON.stringify(processedData))
+    sessionStorage.setItem("processingFiles", JSON.stringify(processedData))
+
+    uploadedFiles.forEach((file) => {
+      if (file.preview) {
+        URL.revokeObjectURL(file.preview)
+      }
+    })
 
     setIsProcessing(false)
     router.push("/process")
@@ -146,7 +171,6 @@ export function FileUpload() {
             <Button
               variant="outline"
               className="relative bg-transparent"
-              onClick={() => document.getElementById("pdf-input")?.click()}
             >
               <FileText className="size-4 mr-2" />
               Upload PDF
@@ -163,7 +187,6 @@ export function FileUpload() {
             <Button
               variant="outline"
               className="relative bg-transparent"
-              onClick={() => document.getElementById("image-input")?.click()}
             >
               <ImageIcon className="size-4 mr-2" />
               Upload Images
@@ -239,6 +262,19 @@ export function FileUpload() {
             ))}
           </div>
         </div>
+      )}
+
+      {uploadErrors.length > 0 && (
+        <Card className="p-4 bg-destructive/10 border-destructive/30">
+          <div className="space-y-2">
+            <h4 className="text-sm font-semibold text-destructive">Upload Issues</h4>
+            <ul className="text-sm text-muted-foreground space-y-1">
+              {uploadErrors.map((error, index) => (
+                <li key={index}>{error}</li>
+              ))}
+            </ul>
+          </div>
+        </Card>
       )}
     </div>
   )

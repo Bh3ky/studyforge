@@ -3,12 +3,14 @@
 import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Download, Share2, Edit } from "lucide-react"
+import type { NotesData } from "@/lib/schemas/processing"
 
 interface NotesPreviewProps {
   fileName: string
+  data: NotesData
 }
 
-export function NotesPreview({ fileName }: NotesPreviewProps) {
+export function NotesPreview({ fileName, data }: NotesPreviewProps) {
   return (
     <Card className="overflow-hidden border-border">
       <div className="p-6 border-b border-border bg-secondary/20">
@@ -39,114 +41,61 @@ export function NotesPreview({ fileName }: NotesPreviewProps) {
         {/* Title */}
         <div className="space-y-2">
           <div className="inline-block px-3 py-1 bg-accent/20 rounded text-xs font-semibold text-accent">
-            MATHEMATICS
+            {data.subject.toUpperCase()}
           </div>
-          <h2 className="text-3xl font-bold text-foreground">Calculus Fundamentals</h2>
+          <h2 className="text-3xl font-bold text-foreground">{data.title}</h2>
           <p className="text-sm text-muted-foreground">Extracted from handwritten notes</p>
         </div>
 
-        {/* Section: Derivatives */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="size-8 rounded bg-primary/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-primary">1</span>
-            </div>
-            <h3 className="text-xl font-semibold text-foreground">Derivatives</h3>
-          </div>
-
-          <Card className="p-6 bg-secondary/50 border-border space-y-4">
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Definition:</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                The derivative of a function represents the rate of change at any given point. It's the slope of the
-                tangent line to the curve.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Power Rule:</h4>
-              <div className="p-4 rounded-lg bg-primary/10 border border-primary/20">
-                <p className="text-center font-mono text-lg text-foreground">d/dx(x^n) = nx^(n-1)</p>
+        {data.sections.map((section, index) => {
+          const isPrimary = index % 2 === 0
+          return (
+            <div key={`${section.number}-${section.heading}`} className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div
+                  className={`size-8 rounded flex items-center justify-center ${
+                    isPrimary ? "bg-primary/20" : "bg-accent/20"
+                  }`}
+                >
+                  <span className={`text-sm font-bold ${isPrimary ? "text-primary" : "text-accent"}`}>
+                    {section.number}
+                  </span>
+                </div>
+                <h3 className="text-xl font-semibold text-foreground">{section.heading}</h3>
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Example:</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>If f(x) = x³, then f'(x) = 3x²</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-primary mt-1">•</span>
-                  <span>If f(x) = 5x⁴, then f'(x) = 20x³</span>
-                </li>
-              </ul>
+              <Card className="p-6 bg-secondary/50 border-border space-y-4">
+                {section.content.map((content, contentIndex) => (
+                  <div key={`${content.heading}-${contentIndex}`} className="space-y-2">
+                    <h4 className="text-sm font-semibold text-foreground">{content.heading}:</h4>
+                    <p className="text-sm text-muted-foreground leading-relaxed">{content.text}</p>
+                    {content.items && content.items.length > 0 && (
+                      <ul className="space-y-1 text-sm text-muted-foreground">
+                        {content.items.map((item, itemIndex) => (
+                          <li key={`${item}-${itemIndex}`} className="flex items-start gap-2">
+                            <span className={`${isPrimary ? "text-primary" : "text-accent"} mt-1`}>•</span>
+                            <span>{item}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                ))}
+              </Card>
             </div>
-          </Card>
-        </div>
-
-        {/* Section: Integration */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-3">
-            <div className="size-8 rounded bg-accent/20 flex items-center justify-center">
-              <span className="text-sm font-bold text-accent">2</span>
-            </div>
-            <h3 className="text-xl font-semibold text-foreground">Integration</h3>
-          </div>
-
-          <Card className="p-6 bg-secondary/50 border-border space-y-4">
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Definition:</h4>
-              <p className="text-sm text-muted-foreground leading-relaxed">
-                Integration is the reverse of differentiation. It finds the area under a curve or the antiderivative of
-                a function.
-              </p>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Basic Rule:</h4>
-              <div className="p-4 rounded-lg bg-accent/10 border border-accent/20">
-                <p className="text-center font-mono text-lg text-foreground">∫x^n dx = (x^(n+1))/(n+1) + C</p>
-              </div>
-            </div>
-
-            <div className="space-y-2">
-              <h4 className="text-sm font-semibold text-foreground">Key Points:</h4>
-              <ul className="space-y-1 text-sm text-muted-foreground">
-                <li className="flex items-start gap-2">
-                  <span className="text-accent mt-1">•</span>
-                  <span>Always add constant C for indefinite integrals</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-accent mt-1">•</span>
-                  <span>Definite integrals have upper and lower bounds</span>
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="text-accent mt-1">•</span>
-                  <span>Area under curve = ∫[a to b] f(x) dx</span>
-                </li>
-              </ul>
-            </div>
-          </Card>
-        </div>
+          )
+        })}
 
         {/* Practice Problems */}
         <Card className="p-6 bg-primary/5 border-primary/20">
           <h4 className="text-sm font-semibold text-foreground mb-4">Practice Problems:</h4>
           <div className="space-y-3 text-sm text-muted-foreground">
-            <div className="flex items-start gap-2">
-              <span className="text-primary font-semibold">1.</span>
-              <span>Find the derivative of f(x) = 7x⁵ - 3x² + 2x</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-primary font-semibold">2.</span>
-              <span>Calculate ∫(4x³ + 2x) dx</span>
-            </div>
-            <div className="flex items-start gap-2">
-              <span className="text-primary font-semibold">3.</span>
-              <span>Find the area under y = x² from x = 0 to x = 3</span>
-            </div>
+            {data.practiceProblems.map((problem, index) => (
+              <div key={`${problem}-${index}`} className="flex items-start gap-2">
+                <span className="text-primary font-semibold">{index + 1}.</span>
+                <span>{problem}</span>
+              </div>
+            ))}
           </div>
         </Card>
       </div>

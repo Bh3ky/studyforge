@@ -2,6 +2,7 @@ import type React from "react"
 import type { Metadata } from "next"
 import { IBM_Plex_Mono } from "next/font/google"
 import { Analytics } from "@vercel/analytics/next"
+import { ClerkProvider } from "@clerk/nextjs"
 import "./globals.css"
 
 // <CHANGE> Using IBM Plex Mono for retro monospace aesthetic
@@ -41,11 +42,13 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en">
-      <body className={`${ibmPlexMono.variable} font-mono antialiased`}>
-        {children}
-        <Analytics />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body className={`${ibmPlexMono.variable} font-mono antialiased`}>
+          {children}
+          <Analytics />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

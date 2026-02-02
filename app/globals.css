@@ -125,3 +125,81 @@
     @apply bg-background text-foreground;
   }
 }
+
+@keyframes sf-float {
+  0% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes sf-marquee {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes sf-pulse {
+  0% {
+    opacity: 0.85;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+.sf-float-slow {
+  animation: sf-float 8s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.sf-float-slower {
+  animation: sf-float 12s ease-in-out infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.sf-float-delay {
+  animation: sf-float 10s ease-in-out infinite;
+  animation-delay: -2s;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.sf-marquee {
+  overflow: hidden;
+}
+
+.sf-marquee-track {
+  display: flex;
+  width: 200%;
+  animation: sf-marquee 26s linear infinite;
+  will-change: transform;
+  transform: translateZ(0);
+}
+
+.sf-shimmer {
+  animation: sf-pulse 8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sf-float-slow,
+  .sf-float-slower,
+  .sf-float-delay,
+  .sf-marquee-track,
+  .sf-shimmer {
+    animation: none;
+  }
+}

@@ -97,3 +97,9 @@ storybook-static/
 *.pid
 *.seed
 *.retry
+
+.agent/
+# clerk configuration (can include secrets)
+/.clerk/
+
+docs/

@@ -6,7 +6,6 @@ import { Loader2, FileText, ImageIcon, Sparkles } from "lucide-react"
 interface FileData {
   name: string
   type: "pdf" | "image"
-  size: number
 }
 
 interface ProcessingAnimationProps {
