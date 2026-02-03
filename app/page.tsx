@@ -48,23 +48,23 @@ function LandingPage() {
         <div className="max-w-5xl mx-auto text-center space-y-10">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border">
             <Globe className="size-4 text-primary" />
-            <span className="text-sm text-foreground">Built for African Students</span>
+            <span className="text-sm text-foreground">Built for Students</span>
           </div>
 
           <div className="space-y-6">
-            <h1 className="text-5xl md:text-6xl font-bold text-foreground leading-tight text-balance">
+            <h1 className="text-4xl md:text-5xl font-bold text-foreground leading-tight text-balance">
               Turn Study Notes Into <span className="text-primary">Stunning Infographics</span>
             </h1>
-            <p className="text-lg md:text-xl text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
+            <p className="text-base md:text-lg text-muted-foreground max-w-3xl mx-auto text-pretty leading-relaxed">
               Upload PDFs, handwritten pages, or lecture photos. StudyForge organizes them into crisp, visual study
               guides you can review in minutes.
             </p>
           </div>
 
           <div className="relative mt-12">
-            <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top,oklch(0.75_0.15_75_/_0.25),transparent_55%)]" />
-            <div className="relative rounded-3xl border border-primary/20 bg-card/70 backdrop-blur-xl p-8 md:p-12 overflow-hidden">
-              <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.28_0.02_65)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.28_0.02_65)_1px,transparent_1px)] bg-[size:4rem_4rem] opacity-15" />
+            <div className="absolute inset-0 rounded-3xl bg-[radial-gradient(circle_at_top,oklch(0.75_0.15_75/0.25),transparent_55%)]" />
+            <div className="relative rounded-3xl border border-primary/20 bg-card/70 backdrop-blur-xl p-8 md:p-12 overflow-hidden sf-stable">
+              <div className="absolute inset-0 bg-[linear-gradient(to_right,oklch(0.28_0.02_65)_1px,transparent_1px),linear-gradient(to_bottom,oklch(0.28_0.02_65)_1px,transparent_1px)] bg-size-[4rem_4rem] opacity-15" />
 
               <div className="relative flex flex-col items-center gap-8">
                 <div className="flex items-center justify-center gap-4 md:gap-8">
@@ -82,7 +82,7 @@ function LandingPage() {
                       className="w-full h-full object-cover"
                     />
                   </div>
-                  <div className="hidden sm:block w-24 h-32 md:w-32 md:h-44 rounded-xl overflow-hidden border border-border bg-secondary/60 shadow-lg rotate-[12deg] sf-float-delay">
+                  <div className="hidden sm:block w-24 h-32 md:w-32 md:h-44 rounded-xl overflow-hidden border border-border bg-secondary/60 shadow-lg rotate-12 sf-float-delay">
                     <img
                       src="/math-calculus-notes.jpg"
                       alt="Math notes preview"
@@ -92,8 +92,8 @@ function LandingPage() {
                 </div>
 
                 <div className="max-w-3xl text-center space-y-4">
-                  <h2 className="text-2xl md:text-3xl font-semibold text-foreground">Your Study Desk, Reimagined</h2>
-                  <p className="text-sm md:text-base text-muted-foreground leading-relaxed">
+                  <h2 className="text-xl md:text-2xl font-semibold text-foreground">Your Study Desk, Reimagined</h2>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
                     From dense textbooks to clear visuals, StudyForge highlights the key ideas so you can focus on
                     learning faster and remembering longer.
                   </p>
@@ -129,7 +129,7 @@ function LandingPage() {
             <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
               <div className="space-y-2">
                 <p className="text-xs uppercase tracking-[0.2em] text-muted-foreground">StudyForge Flow</p>
-                <h2 className="text-2xl md:text-3xl font-semibold text-foreground">
+                <h2 className="text-xl md:text-2xl font-semibold text-foreground">
                   Upload. Transform. Study smarter.
                 </h2>
                 <p className="text-sm text-muted-foreground max-w-xl">
@@ -156,10 +156,10 @@ function LandingPage() {
       <section id="features" className="container mx-auto px-4 py-20 border-t border-border">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Powerful Tools for <span className="text-primary">Better Learning</span>
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto">
               Everything you need to ace your exams and retain information effectively
             </p>
           </div>
@@ -221,7 +221,7 @@ function LandingPage() {
                   ].map((item, index) => (
                     <div
                       key={`${groupIndex}-${item.label}-${index}`}
-                      className="flex items-center gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3 min-w-[220px]"
+                      className="flex items-center gap-3 rounded-xl border border-border bg-secondary/40 px-4 py-3 min-w-55"
                     >
                       <div className="size-10 rounded-lg overflow-hidden border border-border">
                         <img src={item.src} alt={`${item.label} preview`} className="w-full h-full object-cover" />
@@ -243,10 +243,10 @@ function LandingPage() {
       <section id="how-it-works" className="container mx-auto px-4 py-20 border-t border-border">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-16 space-y-4">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground">
               Simple <span className="text-primary">Three-Step</span> Process
             </h2>
-            <p className="text-lg text-muted-foreground">From upload to study-ready in minutes</p>
+            <p className="text-base md:text-lg text-muted-foreground">From upload to study-ready in minutes</p>
           </div>
 
           <div className="space-y-8">
@@ -272,7 +272,7 @@ function LandingPage() {
                 <div className="flex flex-col md:flex-row gap-6 items-start">
                   <div className="text-6xl font-bold text-primary/20 select-none">{item.step}</div>
                   <div className="flex-1 space-y-2">
-                    <h3 className="text-2xl font-semibold text-foreground">{item.title}</h3>
+                    <h3 className="text-xl font-semibold text-foreground">{item.title}</h3>
                     <p className="text-muted-foreground leading-relaxed">{item.description}</p>
                   </div>
                 </div>
@@ -284,13 +284,13 @@ function LandingPage() {
 
       {/* CTA Section */}
       <section className="container mx-auto px-4 py-20 border-t border-border">
-        <Card className="max-w-4xl mx-auto p-12 bg-gradient-to-br from-primary/10 to-accent/10 border-primary/20">
+        <Card className="max-w-4xl mx-auto p-12 bg-linear-to-br from-primary/10 to-accent/10 border-primary/20">
           <div className="text-center space-y-6">
-            <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
+            <h2 className="text-3xl md:text-4xl font-bold text-foreground text-balance">
               Ready to Transform Your Learning?
             </h2>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
-              Join thousands of African students already using StudyForge to ace their exams
+            <p className="text-base md:text-lg text-muted-foreground max-w-2xl mx-auto text-pretty">
+              Join thousands of students already using StudyForge to ace their exams
             </p>
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button asChild size="lg" className="text-base px-8 py-6">
@@ -313,7 +313,7 @@ function LandingPage() {
                 <div className="size-8 bg-primary rounded flex items-center justify-center">
                   <Sparkles className="size-5 text-primary-foreground" />
                 </div>
-                <span className="text-lg font-bold text-foreground">StudyForge</span>
+                <span className="text-base md:text-lg font-bold text-foreground">StudyForge</span>
               </div>
               <p className="text-sm text-muted-foreground">
                 Empowering African students with AI-powered learning tools.
