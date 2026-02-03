@@ -59,21 +59,7 @@ CLERK_AFTER_SIGN_IN_URL=/dashboard
 CLERK_AFTER_SIGN_UP_URL=/dashboard
 ```
 
-If your Supabase project uses publishable keys, use `SUPABASE_PUBLISHABLE_KEY` and `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` instead of anon keys.
-
-### 3) Supabase schema + RLS
-
-Run the SQL in `supabase/processed_outputs.sql` using the Supabase SQL Editor. This creates the `app` schema, table, and RLS policies.
-
-### 4) Clerk + Supabase integration
-
-Use the official Third-Party Auth flow:
-
-- Enable the Clerk → Supabase integration in Clerk
-- Add Clerk as a Third-Party Auth provider in Supabase
-- Ensure Clerk tokens include the `authenticated` role claim
-
-See `docs/SUPABASE_SETUP.md` for step-by-step instructions.
+- Note: refer to the official documentation for setup and configurations.
 
 ### 5) Run locally
 
@@ -99,23 +85,7 @@ Tests are required for new logic. Run:
 npm test
 ```
 
-## Troubleshooting
 
-### RLS error: "new row violates row-level security policy"
+## 📜 License
 
-- Confirm Clerk → Supabase integration is configured
-- Confirm the `app` schema is exposed in Supabase API settings
-- Confirm your session token includes `role: authenticated`
-
-### Gemini model 404
-
-Set a valid model name in `.env.local`, e.g.:
-
-```
-GEMINI_TEXT_MODEL=gemini-2.5-flash
-GEMINI_VISION_MODEL=gemini-2.5-flash
-```
-
-## Roadmap
-
-See `ROADMAP.md` and `docs/features_to_implement.md`.
+This project is licensed under the MIT License – see the [LICENSE](LICENSE) file for details.

@@ -54,7 +54,7 @@ export function RecentProjects() {
                   alt={project.name}
                   className="w-full h-full object-cover group-hover:scale-105 transition-transform"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 gap-2">
+                <div className="absolute inset-0 bg-linear-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-4 gap-2">
                   <Button size="sm" variant="secondary" asChild>
                     <Link href="/process">
                       <Eye className="size-4 mr-1" />
@@ -70,7 +70,7 @@ export function RecentProjects() {
 
               <div className="p-4 space-y-3">
                 <div className="flex items-start gap-3">
-                  <div className="size-10 rounded bg-primary/10 flex items-center justify-center flex-shrink-0">
+                  <div className="size-10 rounded bg-primary/10 flex items-center justify-center shrink-0">
                     {project.type === "pdf" ? (
                       <FileText className="size-5 text-primary" />
                     ) : (
