@@ -1,5 +1,8 @@
 # StudyForge
 
+![Welcome page](public/welcome.png)
+
+
 StudyForge is a Next.js app that turns PDFs and handwritten notes into structured study materials. It uses Gemini for content extraction and transformation, Clerk for authentication, and Supabase for storage with Row Level Security (RLS).
 
 ## Features
